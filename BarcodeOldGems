@@ -1,0 +1,22 @@
+See BarcodeOldCode for an explaination of this
+
+gem 'prawn'
+#gem 'gbarcode' => 'http://rubyforge.org/tracker/index.php?func=detail&aid=25900&group_id=3314&atid=12825'
+
+gem 'gbarcode'
+#gem 'gbarcode/pkg/gbarcode-0.98.gem'
+gem 'prawn'
+gem 'gbarcode'
+gem 'barby', '0.4.1'
+#gem 'rmagick'
+gem 'barby-chunky_png'
+gem 'prawn'
+gem 'gbarcode'
+#gem 'barby', '0.4.3'
+gem 'barby', :git => 'git://github.com/toretore/barby'
+gem 'barby-chunky_png'
+
+#gem 'rmagick'
+gem 'rghost'
+gem 'rghost_barcode'  
+gem 'prawn'

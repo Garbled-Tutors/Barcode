@@ -1,0 +1,31 @@
+
+Getting Barcodes to work on Rails was very difficult as very few of the resources I found worked and they were poorly documented.
+Prawn and Barby turned out to be the only ones I could get to work.
+
+First some basic information that you should know. When using Prawn, the Origin (0,0), is located at the bottom left.
+When you rotate the pdf, (0,0) remains at the bottom left.
+
+I am about to add add a few methods that helped me place my objects, it seems with Prawn the best way to position your objects is with alot of trial and error.
+
+*******************
+I recently noticed that the barcodes I was generating were not scanning, it seems that decimal values for xdim caused the barcodes to be unreadable
+As a result I needed to turn to Prawn to solve this dilema, prawn has some code that allows you to resize the image so to speak, and this solved the problem
+*******************
+
+
+
+Here are a few of the addresses I viewed along the way, I do not expect many of them to prove useful for you.
+I saved them incase I wanted to read them again.
+
+https://github.com/shairontoledo/rghost-barcode
+http://railscasts.com/episodes/153-pdfs-with-prawn
+https://github.com/sandal/prawn/wiki/Using-Prawn-in-Rails
+https://github.com/shairontoledo/rghost-barcode/blob/master/lib/rghost_barcode/rghost_barcode_types.rb
+http://code.google.com/p/barcode-generator/
+http://www.gnu.org/software/barcode/#TOCdownloading
+https://github.com/fightingtheboss/barcode-generator/commit/85f872d1328568b3d08f2a731faa27266e552800
+http://www.ruby-forum.com/topic/150380
+
+Installing RMagick
+http://rmagick.rubyforge.org/install2-linux.html
+http://ubuntuforums.org/showthread.php?t=306216

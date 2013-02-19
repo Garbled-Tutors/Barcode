@@ -1,0 +1,260 @@
+I have been having some problems with git for the last while and as a result many of my versions are missing. I have backed them up to several directories, but now it is time to delete them.
+Here is the improtant code in case I need it later, or if you would like to look around maybe some of it will help you
+
+*************************************************
+require 'prawn'
+
+class HomeController < ApplicationController
+  require 'rubygems'
+  require 'gbarcode'
+  
+  include Gbarcode
+
+  def index
+	# There are three stages to creating a barcode
+	# 1) allocating the space with a string
+	# 2) encoding the string as some barcode
+	# 3) printing out the barcode to Postscript
+	
+	# allocate the barcode for text "TEST1234"
+	bc = barcode_create("TEST1234")
+
+	# encode the barcode using code 39,since code 39 does not use a checksum, we can pass in this additional flag.
+	barcode_encode(bc, BARCODE_NO_CHECKSUM | BARCODE_39)
+
+	#print out the barcode to a Postscript file, using the default width and height and page placement
+	barcode_print(bc, File.new("testout.ps", "w"),BARCODE_OUT_PS)
+	# or
+	barcode_print(bc, File.new("testout.eps", "w"),BARCODE_OUT_EPS)
+
+	#print out the barcode to a Postscript EPS file, using the default width and height and page placement
+	barcode_print(bc, File.new("testout.eps", "w"), BARCODE_OUT_EPS)
+
+	# you can even read the output to a stream like so
+	rd, wr = IO.pipe
+	barcode_print(bc, wr, BARCODE_OUT_EPS)
+	wr.close() # must close this to use the read pipe
+	myEpsBarcodeAsString = rd.readlines().join("\n")
+	rd.close()	# it is good practice to also close this pipe
+  end
+
+end
+********************************************************
+require 'prawn'
+require 'gbarcode'
+require 'barby'
+require 'barby/outputter/ascii_outputter'
+require 'barby/outputter/png_outputter'
+#require 'rubygems' 
+#require 'RMagick'
+
+
+class HomeController < ApplicationController
+  include Gbarcode
+
+  def index
+
+
+    #barcode = Barby::Code128B.new('The noise of mankind has become too much')
+    #@barcode = Barby::Code128B.new('BARBY')
+    #puts barcode.to_ascii
+    
+    #File.open('code128b.png', 'w'){|f|
+      #f.write barcode.to_png(:height => 20, :margin => 5)
+    #}
+    
+    barcode = Barby::Code128B.new('The noise of mankind has become too much')
+    File.open('code128b.png', 'w'){|f|
+      f.write barcode.to_png(:height => 20, :margin => 5)
+    }
+
+    # There are three stages to creating a barcode
+    # 1) allocating the space with a string
+    # 2) encoding the string as some barcode
+    # 3) printing out the barcode to Postscript
+    
+    # allocate the barcode for text "TEST1234"
+    #bc = barcode_create("TEST1234")
+
+    ## encode the barcode using code 39,since code 39 does not use a checksum, we can pass in this additional flag.
+    #barcode_encode(bc, BARCODE_NO_CHECKSUM | BARCODE_39)
+
+
+    ##print out the barcode to a Postscript file, using the default width and height and page placement
+    #barcode_print(bc, File.new("testout.ps", "w"),BARCODE_OUT_PS)
+    ## or
+    #barcode_print(bc, File.new("testout.eps", "w"),BARCODE_OUT_EPS)
+
+    ##print out the barcode to a Postscript EPS file, using the default width and height and page placement
+    #barcode_print(bc, File.new("testout.eps", "w"), BARCODE_OUT_EPS)
+
+    ## you can even read the output to a stream like so
+    #rd, wr = IO.pipe
+    #barcode_print(bc, wr, BARCODE_OUT_EPS)
+    #wr.close() # must close this to use the read pipe
+    #myEpsBarcodeAsString = rd.readlines().join("\n")
+    #rd.close()	# it is good practice to also close this pipe
+       
+    #psc = Magick::ImageList.new(ps_name)
+
+    #@pdf = Prawn::Document.new
+    #@pdf.rotate(90)
+    #barcode = "/tmp/barcode.png"
+    #@pdf.image barcode, :at => [630,-300], :width => 450
+    #@pdf.rotate(270)
+    #@pdf.text("Brett Verhagen", :size => 30, :valign => :top)
+    #@pdf.text("4433 Happy Street", :size => 12, :valign => :top)
+    #@pdf.text("PID: 3002039", :size => 12, :valign => :top)
+
+    #@pdf.draw_text("Sample", :size => 40, :at => [100,500], :rotate => 45)
+
+    #@pdf.render_file('prawn.pdf')
+  end
+
+end
+****************************************************************
+
+require "barby"
+require "barby/outputter/png_outputter" 
+
+class HomeController < ApplicationController
+  include Gbarcode
+
+  def index
+
+    #barcode = Barby::Code25.new("332434320")
+    ##barcode = Barby::Code25Interleaved.new("00017046715")
+    ##barcode.include_checksum = true
+    #File.open('tmp/barcode.png', 'w'){|f|
+    #f.write barcode.to_png(:height => 20, :margin => 5)
+    #}
+
+    #barcode = "tmp/barcode.png"
+
+    @pdf = Prawn::Document.new
+    #@pdf.rotate(90)
+    #@pdf.image barcode, :at => [630,-300], :width => 450
+    #@pdf.rotate(270)
+    #@pdf.text("Brett Verhagen", :size => 30, :valign => :top)
+    #@pdf.text("3221 Barbie Street", :size => 12, :valign => :top)
+    #@pdf.text("PID: 3002039", :size => 12, :valign => :top)
+
+    #@pdf.draw_text("Sample", :size => 40, :at => [100,500], :rotate => 45)
+
+
+    inst_section = {
+      :cello => 'string',
+      :clarinet => 'woodwind',
+      :drum => 'percussion',
+      :oboe => 'woodwind',
+      :trumpet => 'brass',
+      :violin => 'string'
+    }
+
+
+    basic_info = sex
+
+    #basic_info = sex
+    #basic_info = basic_info << " " << age.to_s
+    #basic_info = basic_info << " " << I18n.l(datetime, :format => :date_only_long)
+
+    ##TODO: Make sure this does not crash if any of the data is nil
+    #@pdf.text full_name, :size => 20
+    #@pdf.text "  BD " << birth_datetime, :format => :date_only), :size => 18
+    #@pdf.text "  " << name, :size => 18
+    #@pdf.text "  " << basic_info, :size => 18
+    #@pdf.text "record_number << " AD" << "          " << "%011d" % id, :size => 18
+
+    #barcode = Barby::Code25Interleaved.new("%012d" % id)
+    #File.open('tmp/barcode.png', 'w'){|f|
+    #f.write barcode.to_png(:height => 40, :margin => 5)
+    #}
+
+    #barcode = "tmp/barcode.png"
+    #@pdf.rotate(270)
+    #@pdf.image barcode, :position => :top, :at => [-210,350] # Big Font
+    #@pdf.draw_text(visit.id, :size => 14, :at => [-190,290]) # Big Font
+    #@pdf.rotate(90)
+
+    #@pdf.render_file('prawn.pdf')
+
+    #barcode = Barby::Code128B.new('The noise of mankind has become too much')
+    #@barcode = Barby::Code128B.new('BARBY')
+    #puts barcode.to_ascii
+
+    #File.open('tmp/barcode.png', 'w'){|f|
+    #f.write barcode.to_png(:height => 20, :margin => 5)
+    #}
+
+
+    # There are three stages to creating a barcode
+    # 1) allocating the space with a string
+    # 2) encoding the string as some barcode
+    # 3) printing out the barcode to Postscript
+
+    # allocate the barcode for text "TEST1234"
+    #bc = barcode_create("TEST1234")
+
+    ## encode the barcode using code 39,since code 39 does not use a checksum, we can pass in this additional flag.
+    #barcode_encode(bc, BARCODE_NO_CHECKSUM | BARCODE_39)
+
+
+    ##print out the barcode to a Postscript file, using the default width and height and page placement
+    #barcode_print(bc, File.new("testout.ps", "w"),BARCODE_OUT_PS)
+    ## or
+    #barcode_print(bc, File.new("testout.eps", "w"),BARCODE_OUT_EPS)
+
+    ##print out the barcode to a Postscript EPS file, using the default width and height and page placement
+    #barcode_print(bc, File.new("testout.eps", "w"), BARCODE_OUT_EPS)
+
+    ## you can even read the output to a stream like so
+    #rd, wr = IO.pipe
+    #barcode_print(bc, wr, BARCODE_OUT_EPS)
+    #wr.close() # must close this to use the read pipe
+    #myEpsBarcodeAsString = rd.readlines().join("\n")
+    #rd.close()	# it is good practice to also close this pipe
+
+    #psc = Magick::ImageList.new(ps_name)
+
+    #@pdf = Prawn::Document.new
+    #@pdf.rotate(90)
+    #barcode = "/tmp/barcode.png"
+    #@pdf.image barcode, :at => [630,-300], :width => 450
+    #@pdf.rotate(270)
+    #@pdf.text("Brett Verhagen", :size => 30, :valign => :top)
+    #@pdf.text("4432 Happy Street", :size => 12, :valign => :top)
+    #@pdf.text("PID: 3002039", :size => 12, :valign => :top)
+
+    #@pdf.draw_text("Sample", :size => 40, :at => [100,500], :rotate => 45)
+
+    #@pdf.render_file('prawn.pdf')
+  end
+
+end
+**************************************************************
+
+require 'rghost'
+require 'rghost_barcode'  
+require 'prawn'
+
+class HomeController < ApplicationController
+  def index
+    @doc=RGhost::Document.new
+    @doc.barcode_code39('9999999', :x => 0, :y=> 27, :text => {:size => 10})    
+    @doc.render :png, :logfile => "/tmp/logfile.txt", :debug => true, :filename => "/tmp/barcode.png"
+
+    @pdf = Prawn::Document.new
+    @pdf.rotate(90)
+    barcode = "/tmp/barcode.png"
+    @pdf.image barcode, :at => [630,-300], :width => 450
+    @pdf.rotate(270)
+    @pdf.text("Brett Verhagen", :size => 30, :valign => :top)
+    @pdf.text("3234 Stephanie Street", :size => 12, :valign => :top)
+    @pdf.text("PID: 3002039", :size => 12, :valign => :top)
+
+    @pdf.draw_text("Sample", :size => 40, :at => [100,500], :rotate => 45)
+
+    @pdf.render_file('prawn.pdf')
+  end
+
+end
