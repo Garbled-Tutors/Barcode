@@ -102,7 +102,7 @@ class HomeController < ApplicationController
     #barcode = "/tmp/barcode.png"
     #@pdf.image barcode, :at => [630,-300], :width => 450
     #@pdf.rotate(270)
-    #@pdf.text("Brett Verhagen", :size => 30, :valign => :top)
+    #@pdf.text("Carl Smith", :size => 30, :valign => :top)
     #@pdf.text("4433 Happy Street", :size => 12, :valign => :top)
     #@pdf.text("PID: 3002039", :size => 12, :valign => :top)
 
@@ -135,7 +135,7 @@ class HomeController < ApplicationController
     #@pdf.rotate(90)
     #@pdf.image barcode, :at => [630,-300], :width => 450
     #@pdf.rotate(270)
-    #@pdf.text("Brett Verhagen", :size => 30, :valign => :top)
+    #@pdf.text("Carl Smith", :size => 30, :valign => :top)
     #@pdf.text("3221 Barbie Street", :size => 12, :valign => :top)
     #@pdf.text("PID: 3002039", :size => 12, :valign => :top)
 
@@ -221,7 +221,7 @@ class HomeController < ApplicationController
     #barcode = "/tmp/barcode.png"
     #@pdf.image barcode, :at => [630,-300], :width => 450
     #@pdf.rotate(270)
-    #@pdf.text("Brett Verhagen", :size => 30, :valign => :top)
+    #@pdf.text("Carl Smith", :size => 30, :valign => :top)
     #@pdf.text("4432 Happy Street", :size => 12, :valign => :top)
     #@pdf.text("PID: 3002039", :size => 12, :valign => :top)
 
@@ -248,7 +248,7 @@ class HomeController < ApplicationController
     barcode = "/tmp/barcode.png"
     @pdf.image barcode, :at => [630,-300], :width => 450
     @pdf.rotate(270)
-    @pdf.text("Brett Verhagen", :size => 30, :valign => :top)
+    @pdf.text("Carl Smith", :size => 30, :valign => :top)
     @pdf.text("3234 Stephanie Street", :size => 12, :valign => :top)
     @pdf.text("PID: 3002039", :size => 12, :valign => :top)
 
